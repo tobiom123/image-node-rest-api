@@ -13,10 +13,23 @@ export class ImageService {
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} image`;
+    // const image = this.images.find(image => image.id === id);
+
+    // if (!image) throw new Error('Image not found!');
+
+    // return image;
+    return ''
   }
 
   update(id: number, updateImageDto: UpdateImageDto) {
+    // this.images = this.images.map(image => {
+    //   if (ninja.id === id) {
+    //     return {
+    //       ...image,
+    //       ...updateImageDto
+    //     }
+    //   }
+    // });
     return `This action updates a #${id} image`;
   }
 
