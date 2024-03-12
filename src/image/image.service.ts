@@ -1,39 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { CreateImageDto } from './dto/create-image.dto';
-import { UpdateImageDto } from './dto/update-image.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Image } from './entities/image.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ImageService {
-  create(createImageDto: CreateImageDto) {
-    return 'This action adds a new image';
+  constructor(
+    @InjectRepository(Image)
+    private imageRepository: Repository<Image>,
+  ) {}
+
+  async create(createImageDto: CreateImageDto): Promise<Image> {
+    const newImage = this.imageRepository.create(createImageDto);
+    await this.imageRepository.save(newImage);
+
+    return newImage;
   }
 
   findAll() {
-    return `This action returns all image`;
+    return this.imageRepository.find();
   }
 
-  findOne(id: number) {
-    // const image = this.images.find(image => image.id === id);
-
-    // if (!image) throw new Error('Image not found!');
-
-    // return image;
-    return ''
-  }
-
-  update(id: number, updateImageDto: UpdateImageDto) {
-    // this.images = this.images.map(image => {
-    //   if (ninja.id === id) {
-    //     return {
-    //       ...image,
-    //       ...updateImageDto
-    //     }
-    //   }
-    // });
-    return `This action updates a #${id} image`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} image`;
+  async findOne(id: number): Promise<Image> {
+    return await this.imageRepository.findOneOrFail(id);
   }
 }
