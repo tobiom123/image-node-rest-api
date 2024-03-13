@@ -6,17 +6,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
-    ImageModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
+      host: 'postgres',
       port: 5432,
       username: 'postgres',
       password: 'password',
       database: 'image_node_api',
       entities: [],
       synchronize: true,
+      autoLoadEntities: true
     }),
+    ImageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

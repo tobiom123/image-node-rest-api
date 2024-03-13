@@ -8,8 +8,8 @@ import { Repository } from 'typeorm';
 export class ImageService {
   constructor(
     @InjectRepository(Image)
-    private imageRepository: Repository<Image>,
-  ) {}
+    private imageRepository: Repository<Image>
+  ) { }
 
   async create(createImageDto: CreateImageDto): Promise<Image> {
     const newImage = this.imageRepository.create(createImageDto);
@@ -18,11 +18,11 @@ export class ImageService {
     return newImage;
   }
 
-  findAll() {
+  findAll(): Promise<Image[]> {
     return this.imageRepository.find();
   }
 
-  async findOne(id: number): Promise<Image> {
-    return await this.imageRepository.findOneOrFail(id);
+  findOne(id: number): Promise<Image | null> {
+    return this.imageRepository.findOneBy({ id });
   }
 }
